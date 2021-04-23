@@ -11,7 +11,7 @@ import "./exceptions.dart";
 
 typedef HttpResponseDecoder = FutureOr<Map<String, dynamic>?> Function(
     http.Response httpResponse);
-
+var headerGl;
 /// HTTP link headers
 @immutable
 class HttpLinkHeaders extends ContextEntry {
@@ -114,7 +114,7 @@ class HttpLink extends Link {
     NextLink? forward,
   ]) async* {
     final httpResponse = await _executeRequest(request);
-
+    headerGl = httpResponse.headers;
     final response = await _parseHttpResponse(httpResponse);
 
     if (httpResponse.statusCode >= 300 ||
